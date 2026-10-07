@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CampusPulse Demo System Automated Validation</title>
+<style>
+  body { font-family: sans-serif; background: #0a0e17; color: #fff; padding: 2rem; }
+  .test-row { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .pass { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; }
+  .fail { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; }
+  .badge { font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .badge.pass { background: #10b981; color: #000; }
+  .badge.fail { background: #ef4444; color: #fff; }
+  pre { background: #111827; padding: 1rem; border-radius: 8px; font-size: 12px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h1>CampusPulse Hackathon Demo System Test Suite</h1>
+<div id="results"></div>
+<div id="summary" style="margin-top:1.5rem;font-size:1.2rem;font-weight:700"></div>
+
+<!-- Load application scripts and full structure in hidden iframe -->
+<iframe id="appFrame" src="/" style="width:1000px;height:700px;border:1px solid #333;margin-top:1.5rem;display:block"></iframe>
+
+<script>
+const tests = [];
+function assert(name, condition, details = '') {
+  tests.push({ name, pass: !!condition, details });
+  const row = document.createElement('div');
+  row.className = 'test-row ' + (condition ? 'pass' : 'fail');
+  row.innerHTML = `<span><strong>${tests.length}. ${name}</strong> ${details ? '<br><small>' + details + '</small>' : ''}</span><span class="badge ${condition ? 'pass' : 'fail'}">${condition ? 'PASS' : 'FAIL'}</span>`;
+  document.getElementById('results').appendChild(row);
+}
+
+const frame = document.getElementById('appFrame');
+frame.onload = async () => {
+  // Give frame time to init
+  await new Promise(r => setTimeout(r, 600));
+
+  const win = frame.contentWindow;
+  const doc = frame.contentDocument;
+
+  try {
+    // -------------------------------------------------------------
+    // TEST 1: Login with Name: Aryan Kashyap, Course: B.Tech CSE (AI)
+    // -------------------------------------------------------------
+    win.safeSetStorage(win.STORAGE_KEYS.ACTIVE_USER, ''); // clear any existing session
+    doc.getElementById('demoFullName').value = 'Aryan Kashyap';
+    doc.getElementById('demoCourse').value = 'B.Tech CSE (AI)';
+    doc.getElementById('demoYear').value = '1st Year';
+    doc.getElementById('demoSection').value = 'Section 36';
+    
+    win.handleDemoLogin();
+    await new Promise(r => setTimeout(r, 300));
+
+    const curUser = win.state.currentUser;
+    assert('TEST 1.1: Login creates user with exact entered name', curUser.name === 'Aryan Kashyap', `Name: ${curUser.name}`);
+    assert('TEST 1.2: Login sets exact entered course', curUser.course === 'B.Tech CSE (AI)', `Course: ${curUser.course}`);
+    assert('TEST 1.3: Dashboard greeting shows Aryan Kashyap', doc.getElementById('dashGreeting').textContent.includes('Aryan Kashyap'), doc.getElementById('dashGreeting').textContent);
+    assert('TEST 1.4: Sidebar displays Aryan Kashyap and Course', doc.getElementById('sidebarName').textContent === 'Aryan Kashyap' && doc.getElementById('sidebarCourse').textContent === 'B.Tech CSE (AI)');
+    
+    // Check persistence
+    const savedActive = JSON.parse(win.localStorage.getItem(win.STORAGE_KEYS.ACTIVE_USER));
+    assert('TEST 1.5: Active user persisted in localStorage', savedActive && savedActive.name === 'Aryan Kashyap');
+
+    // -------------------------------------------------------------
+    // TEST 2: Create Complaint "Broken Streetlight"
+    // -------------------------------------------------------------
+    win.navigateTo('reportIssue');
+    win.selectCategory('Infrastructure', '🏗️');
+    
+    doc.getElementById('reportTitle').value = 'Broken Streetlight';
+    doc.getElementById('reportDesc').value = 'Streetlight near Block A is not working.';
+    doc.getElementById('reportLocation').value = 'Block A';
+    win.selectPriority('High', null);
+
+    // Call submitReport()
+    win.submitReport();
+    // Wait for the simulated AI processing timeout (approx 2.4s)
+    await new Promise(r => setTimeout(r, 2600));
+
+    const newInc = win.state.incidents[0];
+    assert('TEST 2.1: Complaint generated with unique ID', newInc.code.startsWith('CP-2026-'), `ID: ${newInc.code}`);
+    assert('TEST 2.2: Complaint title matches entered title', newInc.title === 'Broken Streetlight', `Title: ${newInc.title}`);
+    assert('TEST 2.3: Complaint location is Block A', newInc.location === 'Block A', `Loc: ${newInc.location}`);
+    assert('TEST 2.4: Reporter name is Aryan Kashyap', newInc.reporterName === 'Aryan Kashyap', `Reporter: ${newInc.reporterName}`);
+    assert('TEST 2.5: Initial status is Reported', newInc.status === 'Reported', `Status: ${newInc.status}`);
+    
+    // Verify persistence in localStorage
+    const savedIncidents = JSON.parse(win.localStorage.getItem(win.STORAGE_KEYS.INCIDENTS));
+    assert('TEST 2.6: Complaint saved in shared localStorage incidents', savedIncidents[0].code === newInc.code && savedIncidents[0].status === 'Reported');
+
+    // -------------------------------------------------------------
+    // TEST 3: Switch Demo User to Radhika
+    // -------------------------------------------------------------
+    win.openUserSwitchModal();
+    const radhika = win.state.demoUsers.find(u => u.name === 'Radhika');
+    assert('TEST 3.1: Radhika demo profile exists', !!radhika);
+    
+    win.switchDemoUser(radhika.id);
+    await new Promise(r => setTimeout(r, 300));
+
+    assert('TEST 3.2: Active user changed to Radhika', win.state.currentUser.name === 'Radhika', `User: ${win.state.currentUser.name}`);
+    assert('TEST 3.3: Dashboard greeting updated to Radhika', doc.getElementById('dashGreeting').textContent.includes('Radhika'), doc.getElementById('dashGreeting').textContent);
+    assert('TEST 3.4: Sidebar name updated to Radhika', doc.getElementById('sidebarName').textContent === 'Radhika');
+
+    // Check shared data: Aryan's complaint must be visible to Radhika
+    win.navigateTo('campusIssues');
+    win.renderCampusIssues('all');
+    const firstIssueInList = doc.querySelector('#issuesList .issue-card');
+    assert('TEST 3.5: Aryan\'s complaint visible in Radhika\'s view', firstIssueInList && firstIssueInList.textContent.includes('Broken Streetlight') && firstIssueInList.textContent.includes('Aryan Kashyap'));
+
+    // Check Security Command Center view
+    win.navigateTo('security');
+    win.renderSecurityAlerts();
+    const secAlert = doc.querySelector('#secAlerts .sec-alert-card');
+    assert('TEST 3.6: Aryan\'s complaint visible in Security Command Center', secAlert && secAlert.textContent.includes('Broken Streetlight') && secAlert.textContent.includes('Aryan Kashyap'));
+
+    // -------------------------------------------------------------
+    // TEST 4: Status Transition (Reported -> Assigned -> In Progress -> Resolved)
+    // -------------------------------------------------------------
+    const targetIncId = newInc.id;
+
+    // Step 4.1: Accept / Assign -> Assigned
+    win.updateIncidentStatus(targetIncId, 'Assigned');
+    let incCheck = win.state.incidents.find(i => i.id === targetIncId);
+    assert('TEST 4.1: Status transitions to Assigned', incCheck.status === 'Assigned' && incCheck.timeline.includes('Assigned'));
+
+    // Step 4.2: Mark Responding -> In Progress
+    win.updateIncidentStatus(targetIncId, 'In Progress');
+    incCheck = win.state.incidents.find(i => i.id === targetIncId);
+    assert('TEST 4.2: Status transitions to In Progress', incCheck.status === 'In Progress' && incCheck.timeline.includes('In Progress'));
+
+    // Step 4.3: Resolve -> Resolved
+    win.updateIncidentStatus(targetIncId, 'Resolved');
+    incCheck = win.state.incidents.find(i => i.id === targetIncId);
+    assert('TEST 4.3: Status transitions to Resolved', incCheck.status === 'Resolved' && incCheck.timeline.includes('Resolved'));
+
+    // Verify localStorage has the resolved status
+    const persistedAfterResolve = JSON.parse(win.localStorage.getItem(win.STORAGE_KEYS.INCIDENTS)).find(i => i.id === targetIncId);
+    assert('TEST 4.4: Resolved status persisted in shared localStorage', persistedAfterResolve && persistedAfterResolve.status === 'Resolved');
+
+    // -------------------------------------------------------------
+    // TEST 5: Switch back to Aryan Kashyap
+    // -------------------------------------------------------------
+    const aryan = win.state.demoUsers.find(u => u.name === 'Aryan Kashyap');
+    win.switchDemoUser(aryan.id);
+    await new Promise(r => setTimeout(r, 300));
+
+    assert('TEST 5.1: Switched back to Aryan Kashyap', win.state.currentUser.name === 'Aryan Kashyap');
+    assert('TEST 5.2: Dashboard reflects Aryan Kashyap', doc.getElementById('dashGreeting').textContent.includes('Aryan Kashyap'));
+
+    win.navigateTo('campusIssues');
+    win.renderCampusIssues('all');
+    const aryanViewInc = win.state.incidents.find(i => i.id === targetIncId);
+    assert('TEST 5.3: Complaint exists in Aryan\'s tracking view', !!aryanViewInc);
+    assert('TEST 5.4: Complaint shows status Resolved in Aryan\'s view', aryanViewInc.status === 'Resolved');
+
+    // -------------------------------------------------------------
+    // TEST 6: Persistence verification across reload
+    // -------------------------------------------------------------
+    const activeInStorage = JSON.parse(win.localStorage.getItem(win.STORAGE_KEYS.ACTIVE_USER));
+    assert('TEST 6.1: Active session in localStorage matches Aryan', activeInStorage.name === 'Aryan Kashyap');
+    const allIncidentsInStorage = JSON.parse(win.localStorage.getItem(win.STORAGE_KEYS.INCIDENTS));
+    assert('TEST 6.2: Shared incidents in localStorage preserved', allIncidentsInStorage.length >= 10);
+
+    // -------------------------------------------------------------
+    // Summary
+    // -------------------------------------------------------------
+    const passCount = tests.filter(t => t.pass).length;
+    const allPassed = passCount === tests.length;
+    const summaryEl = document.getElementById('summary');
+    summaryEl.innerHTML = `<span style="color:${allPassed ? '#10b981' : '#ef4444'}">${passCount} / ${tests.length} TESTS PASSED ${allPassed ? '✅ (ALL TESTS PASSED)' : '❌'}</span>`;
+  } catch (err) {
+    assert('CRITICAL ERROR IN SUITE', false, err.stack || err.message);
+  }
+};
+</script>
+</body>
+</html>

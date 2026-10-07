@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+<title>CampusPulse — AI Campus OS</title>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#0a0e17"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<link rel="icon" type="image/svg+xml" href="icon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════════════════ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-bg-particles"></div>
+  <div class="login-container">
+    <div class="login-left">
+      <div class="login-brand">
+        <div class="brand-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="18" stroke="url(#grad1)" stroke-width="2.5"/>
+            <circle cx="20" cy="20" r="10" fill="url(#grad1)" opacity="0.3"/>
+            <circle cx="20" cy="20" r="4" fill="#00d4ff"/>
+            <path d="M20 2 L20 8 M20 32 L20 38 M2 20 L8 20 M32 20 L38 20" stroke="#00d4ff" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#0066ff"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>CampusPulse</h1>
+          <span class="brand-tag">AI Campus OS</span>
+        </div>
+      </div>
+      <p class="login-tagline">"One intelligent pulse for a safer, smarter campus."</p>
+      <div class="login-features">
+        <div class="lf-item"><span class="lf-dot safety"></span> Real-time Safety Radar</div>
+        <div class="lf-item"><span class="lf-dot ai"></span> AI-Powered Complaint Routing</div>
+        <div class="lf-item"><span class="lf-dot comm"></span> Campus Community Network</div>
+        <div class="lf-item"><span class="lf-dot plan"></span> Smart Academic Planner</div>
+      </div>
+      <div class="flow-pills">
+        <span class="pill prevent">PREVENT</span>
+        <span class="flow-arrow">→</span>
+        <span class="pill report">REPORT</span>
+        <span class="flow-arrow">→</span>
+        <span class="pill respond">RESPOND</span>
+        <span class="flow-arrow">→</span>
+        <span class="pill verify">VERIFY</span>
+        <span class="flow-arrow">→</span>
+        <span class="pill improve">IMPROVE</span>
+      </div>
+    </div>
+    <div class="login-right">
+      <div class="login-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;gap:0.5rem;flex-wrap:wrap">
+          <h2>Campus Access</h2>
+          <span class="demo-badge">Demo Access — Hackathon Prototype</span>
+        </div>
+        <p class="login-sub">Create your local profile to enter the Campus AI OS</p>
+        
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="demoFullName" placeholder="e.g. Aryan Kashyap" class="form-input" value="Aryan Kashyap"/>
+        </div>
+
+        <div class="form-group">
+          <label>Course <span class="req">*</span></label>
+          <input type="text" id="demoCourse" placeholder="e.g. B.Tech CSE (AI)" class="form-input" value="B.Tech CSE (AI)"/>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem">
+          <div>
+            <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary);margin-bottom:0.45rem">Year (Optional)</label>
+            <input type="text" id="demoYear" placeholder="e.g. 1st Year" class="form-input" value="1st Year"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary);margin-bottom:0.45rem">Section (Optional)</label>
+            <input type="text" id="demoSection" placeholder="e.g. Section 36" class="form-input" value="Section 36"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Role</label>
+          <div class="role-selector">
+            <button class="role-btn active" data-role="student" type="button">👨‍🎓 Student</button>
+            <button class="role-btn" data-role="faculty" type="button">👨‍🏫 Faculty</button>
+            <button class="role-btn" data-role="security" type="button">👮 Security</button>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-full" onclick="handleDemoLogin()">Continue to CampusPulse →</button>
+        
+        <div class="login-divider"><span>or select demo presenter</span></div>
+        <div class="demo-logins">
+          <div class="demo-buttons" style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
+            <button class="demo-btn" type="button" onclick="quickFillDemo('Aryan Kashyap', 'B.Tech CSE (AI)', '1st Year', 'Section 36', 'student')">👨‍🎓 Aryan Kashyap</button>
+            <button class="demo-btn" type="button" onclick="quickFillDemo('Radhika', 'B.Tech CSE (AI)', '1st Year', 'Section 36', 'student')">👩‍🎓 Radhika</button>
+            <button class="demo-btn" type="button" onclick="quickFillDemo('Officer Vikram Singh', 'Security Command', 'Staff', '', 'security')">👮 Officer Vikram</button>
+            <button class="demo-btn" type="button" onclick="quickFillDemo('Dr. Ramesh Sharma', 'CS Dept', 'Faculty', '', 'faculty')">👨‍🏫 Dr. Ramesh</button>
+          </div>
+        </div>
+        <p class="login-notice">🔒 Demo mode — No university password or OTP required. Shared campus data across all demo accounts.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MAIN APP
+═══════════════════════════════════════════════════ -->
+<div id="mainApp" class="main-app hidden">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="sb-icon">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="18" stroke="url(#grad2)" stroke-width="2.5"/>
+            <circle cx="20" cy="20" r="10" fill="url(#grad2)" opacity="0.3"/>
+            <circle cx="20" cy="20" r="4" fill="#00d4ff"/>
+            <path d="M20 2 L20 8 M20 32 L20 38 M2 20 L8 20 M32 20 L38 20" stroke="#00d4ff" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad2" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#0066ff"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="sb-title">CampusPulse</span>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" onclick="closeSidebar()">✕</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">A</div>
+      <div class="user-info">
+        <span class="user-name" id="sidebarName">Aryan Kashyap</span>
+        <span class="user-course-badge" id="sidebarCourse" style="font-size:0.75rem;color:var(--cyan);font-weight:600;display:block">B.Tech CSE (AI)</span>
+        <span class="user-role-badge" id="sidebarRole">Student</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+        <span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span>
+      </button>
+      <button class="nav-item" data-page="safetyRadar" onclick="navigateTo('safetyRadar')">
+        <span class="nav-icon">🛡️</span><span class="nav-label">Safety Radar</span>
+        <span class="nav-badge red">4</span>
+      </button>
+      <button class="nav-item" data-page="reportIssue" onclick="navigateTo('reportIssue')">
+        <span class="nav-icon">🚨</span><span class="nav-label">Report Issue</span>
+      </button>
+      <button class="nav-item" data-page="campusIssues" onclick="navigateTo('campusIssues')">
+        <span class="nav-icon">📍</span><span class="nav-label">Campus Issues</span>
+        <span class="nav-badge orange">7</span>
+      </button>
+      <button class="nav-item" data-page="lostFound" onclick="navigateTo('lostFound')">
+        <span class="nav-icon">🔎</span><span class="nav-label">Lost &amp; Found</span>
+        <span class="nav-badge blue">12</span>
+      </button>
+      <button class="nav-item" data-page="parking" onclick="navigateTo('parking')">
+        <span class="nav-icon">🚗</span><span class="nav-label">Parking &amp; Traffic</span>
+      </button>
+      <button class="nav-item" id="plannerNavItem" data-page="planner" onclick="navigateTo('planner')">
+        <span class="nav-icon">📚</span><span class="nav-label">Student Planner</span>
+      </button>
+      <button class="nav-item" id="facultyNavItem" data-page="facultyHub" onclick="navigateTo('facultyHub')">
+        <span class="nav-icon">👨‍🏫</span><span class="nav-label">Faculty Hub</span>
+      </button>
+      <button class="nav-item" data-page="community" onclick="navigateTo('community')">
+        <span class="nav-icon">💬</span><span class="nav-label">Campus Community</span>
+      </button>
+      <button class="nav-item" id="securityNavItem" data-page="security" onclick="navigateTo('security')">
+        <span class="nav-icon">👮</span><span class="nav-label">Security</span>
+      </button>
+      <button class="nav-item" data-page="campusAI" onclick="navigateTo('campusAI')">
+        <span class="nav-icon">🤖</span><span class="nav-label">Campus AI</span>
+      </button>
+      <button class="nav-item" data-page="settings" onclick="navigateTo('settings')">
+        <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" style="margin-bottom:0.5rem;background:rgba(0,212,255,0.08);color:var(--cyan);border:1px solid rgba(0,212,255,0.25)" onclick="openUserSwitchModal()">👥 Switch Demo User</button>
+      <button class="logout-btn" onclick="handleLogout()">← Logout</button>
+      <div class="theme-toggle-sb">
+        <span>🌙</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="themeToggleSb" onchange="toggleTheme()"/>
+          <span class="toggle-slider"></span>
+        </label>
+        <span>☀️</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="content-area" id="contentArea">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="hamburger" onclick="openSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-greeting" id="topbarGreeting">Good evening, Aryan 👋</div>
+      <div class="topbar-actions">
+        <button class="switch-user-btn" onclick="openUserSwitchModal()" title="Switch Demo User">
+          <span>👥</span>
+          <span>Switch User</span>
+        </button>
+        <button class="chrome-install-btn" id="chromeInstallBtn" onclick="installChromeApp()" title="Install in Google Chrome">
+          <span class="cib-icon">🌐</span>
+          <span class="cib-text">Chrome App</span>
+        </button>
+        <div class="alert-bell" onclick="showNotifications()">
+          🔔<span class="bell-badge">3</span>
+        </div>
+        <div class="theme-toggle-top">
+          <label class="toggle-switch small">
+            <input type="checkbox" id="themeToggleTop" onchange="toggleTheme()"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="topbar-avatar" id="topbarAvatar" onclick="openUserSwitchModal()" title="Switch User" style="cursor:pointer">A</div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main class="page-container" id="pageContainer">
+
+      <!-- ════════════ DASHBOARD PAGE ════════════ -->
+      <section class="page active" id="page-dashboard">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title" id="dashGreeting">Good evening, Aryan 👋</h2>
+            <p class="page-sub">Here's what's happening around your campus.</p>
+          </div>
+          <div class="page-header-actions">
+            <div class="campus-status-pill green">🟢 Campus Normal</div>
+          </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card red-accent" onclick="navigateTo('safetyRadar')">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statSafetyAlerts">4</div>
+              <div class="stat-label">Active Safety Alerts</div>
+            </div>
+            <div class="stat-arrow">→</div>
+          </div>
+          <div class="stat-card orange-accent" onclick="navigateTo('campusIssues')">
+            <div class="stat-icon">💡</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statInfraIssues">7</div>
+              <div class="stat-label">Infrastructure Issues</div>
+            </div>
+            <div class="stat-arrow">→</div>
+          </div>
+          <div class="stat-card yellow-accent" onclick="navigateTo('parking')">
+            <div class="stat-icon">🚗</div>
+            <div class="stat-info">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Traffic / Parking</div>
+            </div>
+            <div class="stat-arrow">→</div>
+          </div>
+          <div class="stat-card blue-accent" onclick="navigateTo('lostFound')">
+            <div class="stat-icon">🔎</div>
+            <div class="stat-info">
+              <div class="stat-value">12</div>
+              <div class="stat-label">Lost &amp; Found Items</div>
+            </div>
+            <div class="stat-arrow">→</div>
+          </div>
+          <div class="stat-card purple-accent" onclick="navigateTo('campusIssues')">
+            <div class="stat-icon">📋</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statMyComplaints">2</div>
+              <div class="stat-label">My Complaints</div>
+            </div>
+            <div class="stat-arrow">→</div>
+          </div>
+          <div class="stat-card green-accent">
+            <div class="stat-icon">📍</div>
+            <div class="stat-info">
+              <div class="stat-value" style="font-size:1.1rem;font-weight:700;color:var(--green)">Normal</div>
+              <div class="stat-label">Campus Status</div>
+              <div class="stat-sub">4 alerts · 7 issues open</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-header"><h3>Quick Actions</h3></div>
+        <div class="quick-actions">
+          <button class="qa-btn red" onclick="navigateTo('reportIssue')">🚨 Report Emergency</button>
+          <button class="qa-btn blue" onclick="navigateTo('safetyRadar')">🛡️ View Safety Map</button>
+          <button class="qa-btn orange" onclick="navigateTo('lostFound')">🔎 Lost &amp; Found</button>
+          <button class="qa-btn purple" onclick="openChatbot()">🤖 Ask Campus AI</button>
+        </div>
+
+        <!-- Recent Activity + Mini Map Preview -->
+        <div class="dash-grid-2">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>Recent Campus Incidents</h3>
+              <button class="link-btn" onclick="navigateTo('campusIssues')">View All →</button>
+            </div>
+            <div class="incident-list">
+              <div class="incident-item high" onclick="openIncidentModal('inc1')">
+                <div class="inc-dot red"></div>
+                <div class="inc-info">
+                  <span class="inc-title">Aggressive Dog — Canteen</span>
+                  <span class="inc-meta">18 min ago · High Priority · Assigned</span>
+                </div>
+                <span class="inc-status assigned">Assigned</span>
+              </div>
+              <div class="incident-item" onclick="openIncidentModal('inc2')">
+                <div class="inc-dot orange"></div>
+                <div class="inc-info">
+                  <span class="inc-title">Broken Streetlight — Girls' Hostel Rd</span>
+                  <span class="inc-meta">1h ago · High · In Progress</span>
+                </div>
+                <span class="inc-status inprogress">In Progress</span>
+              </div>
+              <div class="incident-item" onclick="openIncidentModal('inc3')">
+                <div class="inc-dot yellow"></div>
+                <div class="inc-info">
+                  <span class="inc-title">Parking Congestion — Gate 2</span>
+                  <span class="inc-meta">2h ago · Medium · Resolved</span>
+                </div>
+                <span class="inc-status resolved">Resolved</span>
+              </div>
+              <div class="incident-item" onclick="openIncidentModal('inc4')">
+                <div class="inc-dot red"></div>
+                <div class="inc-info">
+                  <span class="inc-title">Sanitary Dispenser Empty — Women's WR</span>
+                  <span class="inc-meta">3h ago · High · Assigned</span>
+                </div>
+                <span class="inc-status assigned">Assigned</span>
+              </div>
+              <div class="incident-item" onclick="openIncidentModal('inc5')">
+                <div class="inc-dot blue"></div>
+                <div class="inc-info">
+                  <span class="inc-title">Lost ID Card — Near Library</span>
+                  <span class="inc-meta">4h ago · Low · Open</span>
+                </div>
+                <span class="inc-status open">Open</span>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>Campus Pulse</h3>
+              <button class="link-btn" onclick="navigateTo('safetyRadar')">Open Map →</button>
+            </div>
+            <!-- Mini Map Preview -->
+            <div class="mini-map" onclick="navigateTo('safetyRadar')">
+              <div class="mini-map-label">Tap to open interactive Safety Radar</div>
+              <div class="campus-mini-layout">
+                <div class="mini-zone" style="top:10%;left:20%;width:50%;height:15%;">Academic Block</div>
+                <div class="mini-zone" style="top:30%;left:10%;width:35%;height:20%;">Library</div>
+                <div class="mini-zone" style="top:30%;left:55%;width:35%;height:20%;">Girls' Hostel</div>
+                <div class="mini-zone" style="top:58%;left:15%;width:30%;height:15%;">Canteen</div>
+                <div class="mini-zone" style="top:58%;left:55%;width:30%;height:15%;">Sports Complex</div>
+                <div class="mini-zone" style="top:80%;left:30%;width:40%;height:12%;">Main Gate</div>
+                <!-- Pins -->
+                <div class="mini-pin red" style="top:28%;left:67%;" title="Streetlight"></div>
+                <div class="mini-pin orange" style="top:62%;left:25%;" title="Dog"></div>
+                <div class="mini-pin yellow" style="top:82%;left:50%;" title="Parking"></div>
+                <div class="mini-pin blue" style="top:35%;left:30%;" title="Lost Item"></div>
+                <div class="mini-pin green" style="top:15%;left:45%;" title="Resolved"></div>
+              </div>
+            </div>
+            <!-- Community Teaser -->
+            <div class="community-teaser">
+              <div class="ct-post">
+                <span class="ct-icon">📍</span>
+                <span class="ct-text">"Main road near Block B is partially blocked. Use alternate route."</span>
+              </div>
+              <div class="ct-post">
+                <span class="ct-icon">✅</span>
+                <span class="ct-text">"Streetlight near library is working again!"</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Insights Banner -->
+        <div class="ai-insight-banner">
+          <div class="aib-icon">🤖</div>
+          <div class="aib-text">
+            <strong>Campus AI Insight</strong>
+            <p>3 recurring reports from Girls' Hostel Road suggest a systemic lighting issue. Recommendation: Infrastructure audit within 48 hours.</p>
+          </div>
+          <button class="btn-ghost" onclick="navigateTo('campusAI')">Ask AI →</button>
+        </div>
+      </section>
+
+      <!-- ════════════ SAFETY RADAR PAGE ════════════ -->
+      <section class="page" id="page-safetyRadar">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">🛡️ Safety Radar</h2>
+            <p class="page-sub">Real-time campus incident map</p>
+          </div>
+          <div class="page-header-actions">
+            <div class="alert-summary">
+              <span class="as-item red">🔴 4 High</span>
+              <span class="as-item orange">🟠 3 Med</span>
+              <span class="as-item green">🟢 8 Resolved</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all" onclick="filterMap('all',this)">All</button>
+          <button class="filter-btn" data-filter="safety" onclick="filterMap('safety',this)">🔴 Safety</button>
+          <button class="filter-btn" data-filter="infra" onclick="filterMap('infra',this)">🟠 Infrastructure</button>
+          <button class="filter-btn" data-filter="parking" onclick="filterMap('parking',this)">🟡 Parking</button>
+          <button class="filter-btn" data-filter="lost" onclick="filterMap('lost',this)">🔵 Lost &amp; Found</button>
+          <button class="filter-btn" data-filter="women" onclick="filterMap('women',this)">🟣 Women's Safety</button>
+          <button class="filter-btn" data-filter="resolved" onclick="filterMap('resolved',this)">🟢 Resolved</button>
+        </div>
+
+        <!-- Interactive Map -->
+        <div class="campus-map-wrapper">
+          <div class="campus-map" id="campusMap">
+            <!-- Campus Layout -->
+            <div class="map-zone academic" style="top:8%;left:25%;width:50%;height:16%;">
+              <span>🏛️ Academic Block</span>
+            </div>
+            <div class="map-zone library" style="top:27%;left:8%;width:28%;height:18%;">
+              <span>📚 Library</span>
+            </div>
+            <div class="map-zone hostel-girls" style="top:27%;left:64%;width:28%;height:18%;">
+              <span>🏠 Girls' Hostel</span>
+            </div>
+            <div class="map-zone hostel-boys" style="top:27%;left:38%;width:22%;height:18%;">
+              <span>🏠 Boys' Hostel</span>
+            </div>
+            <div class="map-zone canteen" style="top:50%;left:8%;width:25%;height:15%;">
+              <span>🍽️ Canteen</span>
+            </div>
+            <div class="map-zone sports" style="top:50%;left:68%;width:24%;height:15%;">
+              <span>⚽ Sports Complex</span>
+            </div>
+            <div class="map-zone parking-area" style="top:50%;left:38%;width:25%;height:15%;">
+              <span>🚗 Parking</span>
+            </div>
+            <div class="map-zone main-gate" style="top:72%;left:35%;width:30%;height:12%;">
+              <span>🚪 Main Gate</span>
+            </div>
+            <div class="map-zone road" style="top:69%;left:5%;width:25%;height:5%;">
+              <span style="font-size:0.6rem">Main Road</span>
+            </div>
+            <!-- Incident Pins -->
+            <div class="map-pin safety active-pin" style="top:32%;left:75%;" data-filter="safety" onclick="openIncidentModal('inc2')" title="Broken Streetlight">
+              <span class="pin-pulse"></span>🔴
+              <div class="pin-label">Streetlight</div>
+            </div>
+            <div class="map-pin safety active-pin" style="top:54%;left:17%;" data-filter="safety" onclick="openIncidentModal('inc1')" title="Aggressive Dog">
+              <span class="pin-pulse"></span>🔴
+              <div class="pin-label">Dog</div>
+            </div>
+            <div class="map-pin parking active-pin" style="top:75%;left:50%;" data-filter="parking" onclick="openIncidentModal('inc3')" title="Parking Congestion">
+              🟡
+              <div class="pin-label">Parking</div>
+            </div>
+            <div class="map-pin infra active-pin" style="top:72%;left:15%;" data-filter="infra" onclick="openIncidentModal('inc6')" title="Reckless Driving">
+              🟠
+              <div class="pin-label">Driving</div>
+            </div>
+            <div class="map-pin women active-pin" style="top:36%;left:68%;" data-filter="women" onclick="openIncidentModal('inc4w')" title="Sanitary Dispenser">
+              🟣
+              <div class="pin-label">Sanitary</div>
+            </div>
+            <div class="map-pin lost active-pin" style="top:38%;left:20%;" data-filter="lost" onclick="openIncidentModal('inc5')" title="Lost ID Card">
+              🔵
+              <div class="pin-label">Lost Item</div>
+            </div>
+            <div class="map-pin resolved active-pin" style="top:14%;left:48%;" data-filter="resolved" onclick="openIncidentModal('incR1')" title="Resolved: Blocked Path">
+              🟢
+              <div class="pin-label">Resolved</div>
+            </div>
+            <div class="map-pin resolved active-pin" style="top:53%;left:78%;" data-filter="resolved" onclick="openIncidentModal('incR2')" title="Resolved: Light Fixed">
+              🟢
+              <div class="pin-label">Fixed</div>
+            </div>
+            <!-- Compass -->
+            <div class="map-compass">N↑</div>
+            <!-- Legend -->
+            <div class="map-legend">
+              <div class="ml-item"><span>🔴</span> High Safety</div>
+              <div class="ml-item"><span>🟠</span> Infrastructure</div>
+              <div class="ml-item"><span>🟡</span> Parking</div>
+              <div class="ml-item"><span>🔵</span> Lost &amp; Found</div>
+              <div class="ml-item"><span>🟣</span> Women's Safety</div>
+              <div class="ml-item"><span>🟢</span> Resolved</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Women's Safety Banner -->
+        <div class="womens-safety-banner" onclick="navigateTo('safetyRadar'); showWomensSafety()">
+          <div class="wsb-left">
+            <span class="wsb-icon">🟣</span>
+            <div>
+              <strong>Women's Safety &amp; Grievance Center</strong>
+              <p>Private, fast reporting for sensitive safety concerns</p>
+            </div>
+          </div>
+          <button class="btn-purple" onclick="event.stopPropagation();showWomensSafetyModal()">Access Module →</button>
+        </div>
+
+        <!-- Incidents List Below Map -->
+        <div class="incidents-below-map">
+          <h3>Active Incidents</h3>
+          <div class="incident-cards-grid" id="incidentCardsGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ REPORT ISSUE PAGE ════════════ -->
+      <section class="page" id="page-reportIssue">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">🚨 Report an Issue</h2>
+            <p class="page-sub">What's happening? Help us act fast.</p>
+          </div>
+        </div>
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step active" id="step1-ind"><span>1</span> Category</div>
+          <div class="step-line"></div>
+          <div class="step" id="step2-ind"><span>2</span> Details</div>
+          <div class="step-line"></div>
+          <div class="step" id="step3-ind"><span>3</span> Confirm</div>
+        </div>
+
+        <!-- Step 1: Category -->
+        <div id="reportStep1">
+          <p class="step-prompt">Select the type of issue you want to report:</p>
+          <div class="category-grid">
+            <button class="cat-card" data-cat="Safety" onclick="selectCategory('Safety','🛡️')">
+              <span class="cat-icon">🛡️</span><span>Safety</span>
+            </button>
+            <button class="cat-card" data-cat="Women's Safety" onclick="selectCategory(this.dataset.cat,'👩')">
+              <span class="cat-icon">👩</span><span>Women's Safety</span>
+            </button>
+            <button class="cat-card" data-cat="Lighting" onclick="selectCategory('Lighting','💡')">
+              <span class="cat-icon">💡</span><span>Lighting</span>
+            </button>
+            <button class="cat-card" data-cat="Animal" onclick="selectCategory('Animal','🐕')">
+              <span class="cat-icon">🐕</span><span>Animal / Dog</span>
+            </button>
+            <button class="cat-card" data-cat="Infrastructure" onclick="selectCategory('Infrastructure','🏗️')">
+              <span class="cat-icon">🏗️</span><span>Infrastructure</span>
+            </button>
+            <button class="cat-card" data-cat="Parking" onclick="selectCategory('Parking','🚗')">
+              <span class="cat-icon">🚗</span><span>Parking</span>
+            </button>
+            <button class="cat-card" data-cat="Traffic" onclick="selectCategory('Traffic','🚦')">
+              <span class="cat-icon">🚦</span><span>Traffic / Reckless Driving</span>
+            </button>
+            <button class="cat-card" data-cat="Sanitary" onclick="selectCategory('Sanitary','🧻')">
+              <span class="cat-icon">🧻</span><span>Sanitary Facility</span>
+            </button>
+            <button class="cat-card" data-cat="Lost Item" onclick="selectCategory('Lost Item','🔎')">
+              <span class="cat-icon">🔎</span><span>Lost Item</span>
+            </button>
+            <button class="cat-card" data-cat="Academic" onclick="selectCategory('Academic','📚')">
+              <span class="cat-icon">📚</span><span>Academic</span>
+            </button>
+            <button class="cat-card" data-cat="Other" onclick="selectCategory('Other','📝')">
+              <span class="cat-icon">📝</span><span>Other</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Details Form -->
+        <div id="reportStep2" class="hidden">
+          <div class="report-form-header">
+            <span id="reportCatIcon" class="rf-icon">🛡️</span>
+            <div>
+              <h3 id="reportCatTitle">Safety Issue</h3>
+              <p>Please provide details below</p>
+            </div>
+          </div>
+          <div class="report-form">
+            <div class="form-group">
+              <label>Issue Title <span class="req">*</span></label>
+              <input type="text" id="reportTitle" class="form-input" placeholder='e.g. "Broken Streetlight" or "Aggressive Dog"' />
+            </div>
+            <div class="form-group">
+              <label>What happened? <span class="req">*</span></label>
+              <textarea id="reportDesc" class="form-textarea" rows="4" placeholder='e.g. "Streetlight near Block A is not working."'></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Location <span class="req">*</span></label>
+                <select id="reportLocation" class="form-select">
+                  <option value="">Select location...</option>
+                  <option>Block A</option>
+                  <option>Block B</option>
+                  <option>Main Gate</option>
+                  <option>Academic Block</option>
+                  <option>Library</option>
+                  <option>Girls' Hostel</option>
+                  <option>Boys' Hostel</option>
+                  <option>Canteen</option>
+                  <option>Sports Complex</option>
+                  <option>Gate 2 Parking</option>
+                  <option>Main Road</option>
+                  <option>Women's Washroom</option>
+                  <option>Other (specify in description)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Priority</label>
+                <div class="priority-selector">
+                  <button class="prio-btn" data-prio="Low" onclick="selectPriority('Low',this)">Low</button>
+                  <button class="prio-btn active" data-prio="Medium" onclick="selectPriority('Medium',this)">Medium</button>
+                  <button class="prio-btn" data-prio="High" onclick="selectPriority('High',this)">High</button>
+                  <button class="prio-btn emergency" data-prio="Emergency" onclick="selectPriority('Emergency',this)">🚨 Emergency</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Action Requested</label>
+              <div class="action-chips">
+                <button class="chip" onclick="toggleChip(this)">Maintenance Required</button>
+                <button class="chip" onclick="toggleChip(this)">Security Assistance</button>
+                <button class="chip" onclick="toggleChip(this)">Animal Control</button>
+                <button class="chip" onclick="toggleChip(this)">Cleaning</button>
+                <button class="chip" onclick="toggleChip(this)">Investigation</button>
+                <button class="chip" onclick="toggleChip(this)">Information</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Upload Image (Optional)</label>
+              <div class="image-upload-zone" onclick="document.getElementById('imgUpload').click()">
+                <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="previewImage(event)"/>
+                <div id="imgPreviewArea">
+                  <span class="upload-icon">📷</span>
+                  <p>Click to upload or drag & drop</p>
+                  <span class="upload-hint">JPG, PNG up to 10MB</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-ghost" onclick="goToStep(1)">← Back</button>
+              <button class="btn-primary" onclick="submitReport()">Submit Report →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: AI Processing + Confirmation -->
+        <div id="reportStep3" class="hidden">
+          <div class="ai-processing" id="aiProcessing">
+            <div class="ai-brain">🤖</div>
+            <h3>Campus AI is processing your report...</h3>
+            <div class="ai-steps-list">
+              <div class="ai-step-item" id="ais1">⏳ Understanding report...</div>
+              <div class="ai-step-item" id="ais2">⏳ Categorizing...</div>
+              <div class="ai-step-item" id="ais3">⏳ Identifying location...</div>
+              <div class="ai-step-item" id="ais4">⏳ Assigning priority...</div>
+              <div class="ai-step-item" id="ais5">⏳ Routing to authorities...</div>
+            </div>
+          </div>
+          <div class="report-success hidden" id="reportSuccess">
+            <div class="success-icon">✅</div>
+            <h2>Report Created!</h2>
+            <div class="success-details">
+              <div class="sd-row"><span>Complaint ID</span><strong id="successId">CP-2026-001</strong></div>
+              <div class="sd-row"><span>Title</span><strong id="successTitle">Broken Streetlight</strong></div>
+              <div class="sd-row"><span>Reporter</span><strong id="successReporter">Aryan Kashyap (B.Tech CSE (AI))</strong></div>
+              <div class="sd-row"><span>Category</span><strong id="successCat">—</strong></div>
+              <div class="sd-row"><span>Location</span><strong id="successLoc">—</strong></div>
+              <div class="sd-row"><span>Priority</span><strong id="successPrio">—</strong></div>
+              <div class="sd-row"><span>Status</span><strong id="successStatus" style="color:var(--cyan)">Reported</strong></div>
+              <div class="sd-row"><span>Assigned to</span><strong id="successAssigned">Campus Security &amp; Facilities</strong></div>
+            </div>
+            <p class="ai-note">🤖 Campus AI has categorized this as <strong id="aiCatNote">High Priority</strong>. Expected response time: <strong>15–30 minutes</strong>.</p>
+            <div class="success-actions">
+              <button class="btn-primary" onclick="navigateTo('campusIssues')">Track Complaint →</button>
+              <button class="btn-ghost" onclick="goToStep(1); resetReport()">Report Another</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ CAMPUS ISSUES PAGE ════════════ -->
+      <section class="page" id="page-campusIssues">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">📍 Campus Issues</h2>
+            <p class="page-sub">All reported complaints and their tracking status</p>
+          </div>
+          <button class="btn-primary" onclick="navigateTo('reportIssue')">+ New Report</button>
+        </div>
+        <!-- Analytics Mini -->
+        <div class="issues-analytics">
+          <div class="ia-card red-accent"><div class="ia-val">4</div><div class="ia-label">High Priority</div></div>
+          <div class="ia-card orange-accent"><div class="ia-val">5</div><div class="ia-label">In Progress</div></div>
+          <div class="ia-card blue-accent"><div class="ia-val">3</div><div class="ia-label">Assigned</div></div>
+          <div class="ia-card green-accent"><div class="ia-val">28</div><div class="ia-label">Resolved</div></div>
+        </div>
+        <!-- Filter -->
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterIssues('all',this)">All</button>
+          <button class="filter-btn" onclick="filterIssues('high',this)">🔴 High Priority</button>
+          <button class="filter-btn" onclick="filterIssues('inprogress',this)">🟠 In Progress</button>
+          <button class="filter-btn" onclick="filterIssues('assigned',this)">🔵 Assigned</button>
+          <button class="filter-btn" onclick="filterIssues('resolved',this)">🟢 Resolved</button>
+        </div>
+        <!-- Issues List -->
+        <div class="issues-list" id="issuesList">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ════════════ LOST & FOUND PAGE ════════════ -->
+      <section class="page" id="page-lostFound">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">🔎 Lost &amp; Found</h2>
+            <p class="page-sub">AI-powered matching for lost and found items</p>
+          </div>
+        </div>
+        <!-- Main Options -->
+        <div class="lf-options">
+          <div class="lf-option lost" onclick="showLFForm('lost')">
+            <div class="lfo-icon">😟</div>
+            <h3>I Lost Something</h3>
+            <p>Report a lost item and let Campus AI find matches</p>
+            <button class="btn-red">Report Lost Item</button>
+          </div>
+          <div class="lf-option found" onclick="showLFForm('found')">
+            <div class="lfo-icon">😊</div>
+            <h3>I Found Something</h3>
+            <p>Submit a found item to help return it safely</p>
+            <button class="btn-green">Submit Found Item</button>
+          </div>
+        </div>
+        <!-- AI Matches -->
+        <div class="ai-matches-section">
+          <div class="section-header">
+            <h3>🤖 Campus AI Matches</h3>
+            <span class="ai-badge">3 Possible Matches Found</span>
+          </div>
+          <div class="match-cards">
+            <div class="match-card">
+              <div class="match-header">
+                <div class="match-icon">🪪</div>
+                <div class="match-info">
+                  <strong>University ID Card</strong>
+                  <span>Lost near Library · 4h ago</span>
+                </div>
+                <span class="match-score">94% Match</span>
+              </div>
+              <p class="match-desc">Possible match: ID Card found near Library entrance. Submitted by Campus Security.</p>
+              <div class="match-actions">
+                <button class="btn-primary small" onclick="showMatchModal()">View Match</button>
+                <button class="btn-ghost small">Contact Securely</button>
+              </div>
+            </div>
+            <div class="match-card">
+              <div class="match-header">
+                <div class="match-icon">👛</div>
+                <div class="match-info">
+                  <strong>Black Wallet</strong>
+                  <span>Lost near Canteen · 6h ago</span>
+                </div>
+                <span class="match-score">78% Match</span>
+              </div>
+              <p class="match-desc">Possible match: Brown wallet with cards found near canteen table. Submitted by student.</p>
+              <div class="match-actions">
+                <button class="btn-primary small" onclick="showMatchModal()">View Match</button>
+                <button class="btn-ghost small">Contact Securely</button>
+              </div>
+            </div>
+            <div class="match-card">
+              <div class="match-header">
+                <div class="match-icon">🎧</div>
+                <div class="match-info">
+                  <strong>Earphones (White)</strong>
+                  <span>Lost at Sports Complex · 1d ago</span>
+                </div>
+                <span class="match-score">61% Match</span>
+              </div>
+              <p class="match-desc">Possible match: White earphones found at sports field. Submitted by security.</p>
+              <div class="match-actions">
+                <button class="btn-primary small" onclick="showMatchModal()">View Match</button>
+                <button class="btn-ghost small">Contact Securely</button>
+              </div>
+            </div>
+          </div>
+          <p class="privacy-note">🔒 Personal contact details are never shown publicly. All matches are handled securely.</p>
+        </div>
+        <!-- Recent Items -->
+        <div class="section-header"><h3>Recently Reported Items</h3></div>
+        <div class="lf-items-grid" id="lfItemsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ════════════ PARKING & TRAFFIC PAGE ════════════ -->
+      <section class="page" id="page-parking">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">🚗 Parking &amp; Traffic</h2>
+            <p class="page-sub">Live campus traffic and parking status</p>
+          </div>
+        </div>
+        <!-- Parking Zones -->
+        <div class="parking-zones">
+          <div class="parking-zone green">
+            <div class="pz-header">
+              <h3>Gate 1 Parking</h3>
+              <span class="pz-status green">🟢 Low Traffic</span>
+            </div>
+            <div class="pz-bar">
+              <div class="pz-fill green" style="width:25%"></div>
+            </div>
+            <div class="pz-stats">
+              <span>~25 vehicles</span><span>Capacity: 100</span>
+            </div>
+            <p class="pz-desc">2-wheelers and staff vehicles. Plenty of space available.</p>
+          </div>
+          <div class="parking-zone orange">
+            <div class="pz-header">
+              <h3>Gate 2 Parking</h3>
+              <span class="pz-status orange">🟠 Busy</span>
+            </div>
+            <div class="pz-bar">
+              <div class="pz-fill orange" style="width:68%"></div>
+            </div>
+            <div class="pz-stats">
+              <span>~68 vehicles</span><span>Capacity: 100</span>
+            </div>
+            <p class="pz-desc">Near capacity. Consider using Gate 1 parking.</p>
+          </div>
+          <div class="parking-zone red">
+            <div class="pz-header">
+              <h3>Academic Block</h3>
+              <span class="pz-status red">🔴 Heavy Congestion</span>
+            </div>
+            <div class="pz-bar">
+              <div class="pz-fill red" style="width:92%"></div>
+            </div>
+            <div class="pz-stats">
+              <span>~92 vehicles</span><span>Capacity: 100</span>
+            </div>
+            <p class="pz-desc">Near full. Overflow vehicles blocking emergency access.</p>
+          </div>
+        </div>
+        <!-- Traffic Reports -->
+        <div class="section-header">
+          <h3>Active Traffic Reports</h3>
+          <button class="btn-primary small" onclick="showTrafficReportModal()">+ Report</button>
+        </div>
+        <div class="traffic-reports">
+          <div class="traffic-card high">
+            <div class="tc-icon">🚧</div>
+            <div class="tc-info">
+              <strong>Emergency Access Blocked</strong>
+              <span>Academic Block · 2 reports · High</span>
+              <p>"Two-wheelers are blocking the emergency access road."</p>
+            </div>
+            <span class="tc-status">Security Notified</span>
+          </div>
+          <div class="traffic-card medium">
+            <div class="tc-icon">🚗</div>
+            <div class="tc-info">
+              <strong>Congestion at Gate 2</strong>
+              <span>Main Gate · 5 reports · Medium</span>
+              <p>"Heavy traffic near Gate 2, vehicles lined up on main road."</p>
+            </div>
+            <span class="tc-status">Monitoring</span>
+          </div>
+          <div class="traffic-card low">
+            <div class="tc-icon">🚦</div>
+            <div class="tc-info">
+              <strong>Reckless Driving</strong>
+              <span>Main Road · 1 report · Low</span>
+              <p>"Vehicle was speeding through the campus internal road."</p>
+            </div>
+            <span class="tc-status">Logged</span>
+          </div>
+        </div>
+        <!-- Quick Report -->
+        <div class="quick-report-traffic">
+          <h3>Quick Report</h3>
+          <div class="qrt-grid">
+            <button class="qrt-btn" onclick="quickTrafficReport('Wrong Parking')">🅿️ Wrong Parking</button>
+            <button class="qrt-btn" onclick="quickTrafficReport('Blocked Route')">🚧 Blocked Route</button>
+            <button class="qrt-btn" onclick="quickTrafficReport('Reckless Driving')">🚗 Reckless Driving</button>
+            <button class="qrt-btn" onclick="quickTrafficReport('Traffic Congestion')">🚦 Congestion</button>
+            <button class="qrt-btn" onclick="quickTrafficReport('Unauthorized Parking')">⛔ Unauthorized Parking</button>
+            <button class="qrt-btn" onclick="quickTrafficReport('Accident')">⚠️ Accident</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ STUDENT PLANNER PAGE ════════════ -->
+      <section class="page" id="page-planner">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">📚 Student AI Planner</h2>
+            <p class="page-sub">Your AI Academic Copilot</p>
+          </div>
+        </div>
+        <div class="planner-layout">
+          <div class="planner-left">
+            <!-- Subjects -->
+            <div class="planner-card">
+              <h3>📖 My Subjects</h3>
+              <div class="subject-list">
+                <div class="subject-item">
+                  <span class="subject-color" style="background:#00d4ff"></span>
+                  <span>Programming</span>
+                  <button class="remove-btn" onclick="removeSubject(this)">✕</button>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-color" style="background:#7c3aed"></span>
+                  <span>Mathematics</span>
+                  <button class="remove-btn" onclick="removeSubject(this)">✕</button>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-color" style="background:#f59e0b"></span>
+                  <span>Cyber Security</span>
+                  <button class="remove-btn" onclick="removeSubject(this)">✕</button>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-color" style="background:#10b981"></span>
+                  <span>Engineering Design</span>
+                  <button class="remove-btn" onclick="removeSubject(this)">✕</button>
+                </div>
+                <div class="subject-item">
+                  <span class="subject-color" style="background:#ef4444"></span>
+                  <span>English</span>
+                  <button class="remove-btn" onclick="removeSubject(this)">✕</button>
+                </div>
+              </div>
+              <div class="add-row">
+                <input type="text" id="newSubject" placeholder="Add subject..." class="form-input small"/>
+                <button class="btn-primary small" onclick="addSubject()">Add</button>
+              </div>
+            </div>
+            <!-- Exams -->
+            <div class="planner-card">
+              <h3>📅 Upcoming Exams</h3>
+              <div class="exam-list">
+                <div class="exam-item">
+                  <div class="exam-countdown">
+                    <span class="countdown-num">17</span>
+                    <span class="countdown-label">days</span>
+                  </div>
+                  <div class="exam-info">
+                    <strong>Midterm Exam</strong>
+                    <span>20 October 2026</span>
+                    <span class="exam-subs">All Subjects</span>
+                  </div>
+                  <span class="exam-alert orange">Upcoming</span>
+                </div>
+                <div class="exam-item">
+                  <div class="exam-countdown">
+                    <span class="countdown-num">45</span>
+                    <span class="countdown-label">days</span>
+                  </div>
+                  <div class="exam-info">
+                    <strong>End Semester</strong>
+                    <span>17 November 2026</span>
+                    <span class="exam-subs">All Subjects</span>
+                  </div>
+                  <span class="exam-alert green">Planned</span>
+                </div>
+              </div>
+              <button class="btn-ghost small" onclick="addExamModal()">+ Add Exam</button>
+            </div>
+            <!-- Upload Timetable -->
+            <div class="planner-card">
+              <h3>📤 Timetable</h3>
+              <button class="upload-timetable-btn" onclick="showTimetableUpload()">
+                <span>📄</span> Upload Timetable
+              </button>
+              <p class="upload-hint-text">Upload PDF, Excel, or image of your timetable. Campus AI will parse it automatically.</p>
+            </div>
+          </div>
+          <div class="planner-right">
+            <!-- Today's Priority -->
+            <div class="priority-card">
+              <h3>⭐ Today's Priority</h3>
+              <ol class="priority-list">
+                <li>Complete Programming assignment</li>
+                <li>Revise Mathematics Unit 2</li>
+                <li>45 min DSA practice session</li>
+              </ol>
+            </div>
+            <!-- AI Schedule -->
+            <div class="ai-schedule-card">
+              <div class="asc-header">
+                <h3>🤖 AI-Generated Schedule — Tomorrow</h3>
+                <button class="btn-ghost small" onclick="regenerateSchedule()">Regenerate</button>
+              </div>
+              <div class="schedule-timeline" id="scheduleTimeline">
+                <div class="sch-item">
+                  <span class="sch-time">08:00</span>
+                  <div class="sch-bar math"></div>
+                  <div class="sch-content">
+                    <strong>Mathematics Revision</strong>
+                    <span>Unit 2 — Calculus · 2 hrs</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">10:00</span>
+                  <div class="sch-bar prog"></div>
+                  <div class="sch-content">
+                    <strong>Programming Class</strong>
+                    <span>Arrays & Linked Lists · 1.5 hrs</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">12:00</span>
+                  <div class="sch-bar break"></div>
+                  <div class="sch-content">
+                    <strong>Lunch Break</strong>
+                    <span>Rest & recharge · 1 hr</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">14:00</span>
+                  <div class="sch-bar eng"></div>
+                  <div class="sch-content">
+                    <strong>Engineering Design</strong>
+                    <span>Project Review · 2 hrs</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">16:00</span>
+                  <div class="sch-bar cyber"></div>
+                  <div class="sch-content">
+                    <strong>Cyber Security</strong>
+                    <span>Network Protocols · 1.5 hrs</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">18:30</span>
+                  <div class="sch-bar prog"></div>
+                  <div class="sch-content">
+                    <strong>DSA Practice</strong>
+                    <span>LeetCode Problems · 45 min</span>
+                  </div>
+                </div>
+                <div class="sch-item">
+                  <span class="sch-time">20:30</span>
+                  <div class="sch-bar eng"></div>
+                  <div class="sch-content">
+                    <strong>Assignment Work</strong>
+                    <span>Programming + English · 1 hr</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Weekly View -->
+            <div class="weekly-card">
+              <h3>📆 Week Overview</h3>
+              <div class="week-grid">
+                <div class="wday today"><span>Mon</span><div class="wday-tasks"><span class="wt math">Math</span><span class="wt prog">Prog</span></div></div>
+                <div class="wday"><span>Tue</span><div class="wday-tasks"><span class="wt cyber">Cyber</span><span class="wt eng">Eng</span></div></div>
+                <div class="wday"><span>Wed</span><div class="wday-tasks"><span class="wt math">Math</span><span class="wt prog">Prog</span></div></div>
+                <div class="wday"><span>Thu</span><div class="wday-tasks"><span class="wt eng">Eng</span><span class="wt engl">Engl</span></div></div>
+                <div class="wday"><span>Fri</span><div class="wday-tasks"><span class="wt cyber">Cyber</span><span class="wt prog">Prog</span></div></div>
+                <div class="wday exam-day"><span>Sat</span><div class="wday-tasks"><span class="wt exam">Midterm</span></div></div>
+                <div class="wday"><span>Sun</span><div class="wday-tasks"><span style="font-size:.7rem;color:var(--text-muted)">Rest</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ FACULTY HUB PAGE ════════════ -->
+      <section class="page" id="page-facultyHub">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">👨‍🏫 Faculty Hub</h2>
+            <p class="page-sub">Turn Syllabus Into a Smarter Teaching Timeline.</p>
+          </div>
+        </div>
+        <div class="faculty-layout">
+          <div class="faculty-left">
+            <div class="fac-card">
+              <h3>📤 Upload Syllabus</h3>
+              <div class="upload-zone" onclick="document.getElementById('syllabusUpload').click()">
+                <input type="file" id="syllabusUpload" style="display:none"/>
+                <span class="upload-icon">📄</span>
+                <p>Upload syllabus document</p>
+                <span class="upload-hint">PDF, DOCX supported</span>
+              </div>
+              <button class="btn-primary btn-full" style="margin-top:.75rem" onclick="showFacultyAI()">Generate AI Timeline →</button>
+            </div>
+            <div class="fac-card">
+              <h3>📅 Class Schedule</h3>
+              <div class="class-schedule-list">
+                <div class="cs-item"><span class="cs-day">Mon</span><span>Programming — 10:00 AM, Room 201</span></div>
+                <div class="cs-item"><span class="cs-day">Tue</span><span>Data Structures — 12:00 PM, Room 301</span></div>
+                <div class="cs-item"><span class="cs-day">Wed</span><span>Programming — 10:00 AM, Room 201</span></div>
+                <div class="cs-item"><span class="cs-day">Thu</span><span>AI Lab — 2:00 PM, Lab 102</span></div>
+                <div class="cs-item"><span class="cs-day">Fri</span><span>Office Hours — 11:00 AM</span></div>
+              </div>
+            </div>
+            <div class="fac-card">
+              <h3>📝 Assessments</h3>
+              <div class="assessment-list">
+                <div class="al-item"><span class="al-date orange">Oct 20</span><span>Midterm Examination</span></div>
+                <div class="al-item"><span class="al-date blue">Nov 5</span><span>Lab Assignment 3 Due</span></div>
+                <div class="al-item"><span class="al-date red">Nov 17</span><span>End Semester Exam</span></div>
+              </div>
+              <button class="btn-ghost small" style="margin-top:.5rem">+ Add Assessment</button>
+            </div>
+          </div>
+          <div class="faculty-right">
+            <!-- Topic Progression -->
+            <div class="fac-card">
+              <div class="fac-card-header">
+                <h3>🤖 AI Topic Progression</h3>
+                <span class="ai-badge small">AI Generated</span>
+              </div>
+              <div class="topic-progression">
+                <div class="tp-week active">
+                  <div class="tp-week-label">Week 1</div>
+                  <div class="tp-content">
+                    <strong>Introduction</strong>
+                    <p>Course overview, tools setup, fundamentals</p>
+                    <div class="tp-topics">
+                      <span class="topic-chip">Variables</span><span class="topic-chip">Data Types</span><span class="topic-chip">I/O</span>
+                    </div>
+                    <div class="tp-progress"><div class="tp-fill" style="width:100%"></div></div>
+                    <span class="tp-status done">✓ Completed</span>
+                  </div>
+                </div>
+                <div class="tp-week">
+                  <div class="tp-week-label">Week 2</div>
+                  <div class="tp-content">
+                    <strong>Core Concepts</strong>
+                    <p>Control flow, functions, arrays</p>
+                    <div class="tp-topics">
+                      <span class="topic-chip">Loops</span><span class="topic-chip">Functions</span><span class="topic-chip">Arrays</span>
+                    </div>
+                    <div class="tp-progress"><div class="tp-fill" style="width:70%"></div></div>
+                    <span class="tp-status inprog">In Progress — 70%</span>
+                  </div>
+                </div>
+                <div class="tp-week">
+                  <div class="tp-week-label">Week 3</div>
+                  <div class="tp-content">
+                    <strong>Advanced Concepts</strong>
+                    <p>Pointers, structs, file handling</p>
+                    <div class="tp-topics">
+                      <span class="topic-chip">Pointers</span><span class="topic-chip">Structs</span><span class="topic-chip">Files</span>
+                    </div>
+                    <div class="tp-progress"><div class="tp-fill" style="width:0%"></div></div>
+                    <span class="tp-status upcoming">Upcoming</span>
+                  </div>
+                </div>
+                <div class="tp-week">
+                  <div class="tp-week-label">Week 4</div>
+                  <div class="tp-content">
+                    <strong>Revision</strong>
+                    <p>Mock tests, doubt clearing, practice problems</p>
+                    <div class="tp-topics">
+                      <span class="topic-chip">Mock Tests</span><span class="topic-chip">Q&amp;A</span>
+                    </div>
+                    <div class="tp-progress"><div class="tp-fill" style="width:0%"></div></div>
+                    <span class="tp-status upcoming">Upcoming</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Schedule Alignment -->
+            <div class="fac-card">
+              <h3>📊 Schedule Alignment Analysis</h3>
+              <div class="alignment-items">
+                <div class="ali-item green"><span>✅</span><div><strong>All core topics covered</strong><p>Remaining 8 topics scheduled across 3 weeks</p></div></div>
+                <div class="ali-item orange"><span>⚠️</span><div><strong>Potential Schedule Conflict</strong><p>Thursday Nov 5 — Lab submission overlaps with a class period</p></div></div>
+                <div class="ali-item blue"><span>📌</span><div><strong>Revision Window</strong><p>3 days before midterm available for revision (Oct 17–19)</p></div></div>
+                <div class="ali-item red"><span>🔴</span><div><strong>Uncovered Topic Detected</strong><p>"Recursion" not yet scheduled — recommend adding to Week 3</p></div></div>
+              </div>
+            </div>
+            <!-- Faculty Calendar -->
+            <div class="fac-card">
+              <h3>📆 Faculty Calendar</h3>
+              <div class="fac-calendar">
+                <div class="fcal-header">
+                  <button onclick="prevMonth()">‹</button>
+                  <span id="calMonthYear">October 2026</span>
+                  <button onclick="nextMonth()">›</button>
+                </div>
+                <div class="fcal-grid" id="facCalGrid">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ COMMUNITY PAGE ════════════ -->
+      <section class="page" id="page-community">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">💬 Campus Community</h2>
+            <p class="page-sub">Real-time campus communication feed</p>
+          </div>
+          <button class="btn-primary" onclick="showCreatePost()">+ Create Post</button>
+        </div>
+        <!-- Post Composer -->
+        <div class="post-composer" id="postComposer" style="display:none">
+          <textarea id="postContent" class="form-textarea" rows="3" placeholder="What's happening on campus?"></textarea>
+          <div class="composer-actions">
+            <div class="composer-tags">
+              <button class="chip" onclick="toggleChip(this)">📍 Location</button>
+              <button class="chip" onclick="toggleChip(this)">⚠️ Alert</button>
+              <button class="chip" onclick="toggleChip(this)">✅ Update</button>
+              <button class="chip" onclick="toggleChip(this)">❓ Question</button>
+            </div>
+            <div style="display:flex;gap:.5rem">
+              <button class="btn-ghost small" onclick="hideCreatePost()">Cancel</button>
+              <button class="btn-primary small" onclick="submitPost()">Post →</button>
+            </div>
+          </div>
+        </div>
+        <!-- Feed -->
+        <div class="community-feed" id="communityFeed">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ════════════ SECURITY DASHBOARD ════════════ -->
+      <section class="page" id="page-security">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">👮 Security Command Center</h2>
+            <p class="page-sub">Real-time incident management for security personnel</p>
+          </div>
+          <div class="sec-status-pill">🟢 On Duty</div>
+        </div>
+        <!-- Alert Stats -->
+        <div class="sec-stats">
+          <div class="sec-stat red"><div class="ss-val">4</div><div class="ss-lab">High Priority</div></div>
+          <div class="sec-stat orange"><div class="ss-val">3</div><div class="ss-lab">Medium Priority</div></div>
+          <div class="sec-stat blue"><div class="ss-val">5</div><div class="ss-lab">In Progress</div></div>
+          <div class="sec-stat green"><div class="ss-val">28</div><div class="ss-lab">Resolved Today</div></div>
+        </div>
+        <!-- Active Alerts -->
+        <div class="section-header"><h3>🚨 Active Alerts</h3></div>
+        <div class="sec-alerts" id="secAlerts">
+          <!-- Populated by JS -->
+        </div>
+        <!-- Security Contacts -->
+        <div class="section-header"><h3>📞 Security Contacts</h3></div>
+        <div class="contact-notice">⚠️ DEMO NUMBERS — NOT REAL CONTACT INFORMATION</div>
+        <div class="sec-contacts">
+          <div class="contact-card">
+            <div class="contact-icon">👮</div>
+            <div class="contact-info">
+              <strong>Campus Security</strong>
+              <span class="demo-num">Demo: +91 90000 00001</span>
+            </div>
+            <button class="btn-ghost small">📞 Call</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🚨</div>
+            <div class="contact-info">
+              <strong>Emergency Desk</strong>
+              <span class="demo-num">Demo: +91 90000 00002</span>
+            </div>
+            <button class="btn-ghost small">📞 Call</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🔧</div>
+            <div class="contact-info">
+              <strong>Maintenance</strong>
+              <span class="demo-num">Demo: +91 90000 00003</span>
+            </div>
+            <button class="btn-ghost small">📞 Call</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🏥</div>
+            <div class="contact-info">
+              <strong>Campus Medical</strong>
+              <span class="demo-num">Demo: +91 90000 00004</span>
+            </div>
+            <button class="btn-ghost small">📞 Call</button>
+          </div>
+        </div>
+        <!-- Future SOS Module -->
+        <div class="future-scope-section">
+          <div class="future-badge">🔵 FUTURE SCOPE — NATIVE MOBILE APP</div>
+          <h3>🆘 Emergency SOS Module</h3>
+          <p>The following features are planned for the native mobile application and are NOT part of the current web MVP.</p>
+          <div class="sos-flow">
+            <div class="sos-step"><div class="sos-icon">🆘</div><strong>SOS Trigger</strong><p>Multiple power-button presses or in-app SOS</p></div>
+            <div class="sos-arrow">→</div>
+            <div class="sos-step"><div class="sos-icon">📍</div><strong>Live Location</strong><p>Share location with authorized campus security</p></div>
+            <div class="sos-arrow">→</div>
+            <div class="sos-step"><div class="sos-icon">🔔</div><strong>Security Alert</strong><p>Campus security receives emergency notification</p></div>
+            <div class="sos-arrow">→</div>
+            <div class="sos-step"><div class="sos-icon">🎥</div><strong>Evidence Capture</strong><p>With appropriate permissions (future native app)</p></div>
+            <div class="sos-arrow">→</div>
+            <div class="sos-step"><div class="sos-icon">🤖</div><strong>AI Analysis</strong><p>Detect distress signals, screaming, sudden motion</p></div>
+            <div class="sos-arrow">→</div>
+            <div class="sos-step"><div class="sos-icon">👮</div><strong>Human Response</strong><p>Verified and dispatched by security personnel</p></div>
+          </div>
+          <div class="sos-disclaimer">
+            <span>🔒 Consent</span> · <span>🛡️ Privacy</span> · <span>✅ Authorization</span> · <span>🚫 False Alarm Controls</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ CAMPUS AI PAGE ════════════ -->
+      <section class="page" id="page-campusAI">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">🤖 Campus AI</h2>
+            <p class="page-sub">Your intelligent campus assistant</p>
+          </div>
+        </div>
+        <div class="ai-page-layout">
+          <div class="ai-chat-panel" id="aiChatPanel">
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-msg ai">
+                <div class="msg-avatar ai-avatar">🤖</div>
+                <div class="msg-bubble">
+                  <p>Hello! I'm <strong>Campus AI</strong>, your intelligent campus assistant. I can help you with:</p>
+                  <ul>
+                    <li>Reporting and tracking campus issues</li>
+                    <li>Creating personalized study plans</li>
+                    <li>Checking parking and traffic status</li>
+                    <li>Lost & Found assistance</li>
+                    <li>Safety information and guidance</li>
+                  </ul>
+                  <p>What can I help you with today?</p>
+                </div>
+              </div>
+            </div>
+            <!-- Suggested Prompts -->
+            <div class="suggested-prompts" id="suggestedPrompts">
+              <button class="sp-btn" onclick="sendAIMessage('I have a Programming exam next week. Make me a study plan.')">📚 Make me a study plan</button>
+              <button class="sp-btn" onclick="sendAIMessage('Where can I report a broken light?')">💡 Report a broken light</button>
+              <button class="sp-btn" onclick="sendAIMessage('Is parking near Gate 2 crowded?')">🚗 Gate 2 parking status</button>
+              <button class="sp-btn" onclick="sendAIMessage('What are the active safety alerts on campus?')">🛡️ Active safety alerts</button>
+              <button class="sp-btn" onclick="sendAIMessage('How can I organize my remaining syllabus?')">📖 Organize my syllabus</button>
+              <button class="sp-btn" onclick="sendAIMessage('I lost my ID card near the library. Can you help?')">🔎 Lost my ID card</button>
+            </div>
+            <!-- Chat Input -->
+            <div class="chat-input-area">
+              <input type="text" id="chatInput" class="form-input" placeholder="Ask Campus AI anything..." onkeydown="handleChatKeydown(event)"/>
+              <button class="btn-primary" onclick="sendAIMessage()">Send →</button>
+            </div>
+          </div>
+          <!-- AI Info Sidebar -->
+          <div class="ai-info-sidebar">
+            <div class="ai-cap-card">
+              <h3>🛡️ Safety Module</h3>
+              <p>Report incidents, check safety status, get guidance during emergencies.</p>
+              <button class="btn-ghost small" onclick="sendAIMessage('What are the active safety alerts on campus?')">Try it →</button>
+            </div>
+            <div class="ai-cap-card">
+              <h3>📚 Academic Planner</h3>
+              <p>Generate study schedules, exam countdowns, and assignment reminders.</p>
+              <button class="btn-ghost small" onclick="sendAIMessage('Create a study schedule for my upcoming midterm.')">Try it →</button>
+            </div>
+            <div class="ai-cap-card">
+              <h3>🔎 Lost &amp; Found</h3>
+              <p>Report lost items and find matches from the campus database.</p>
+              <button class="btn-ghost small" onclick="sendAIMessage('I lost my wallet near the canteen yesterday.')">Try it →</button>
+            </div>
+            <div class="ai-cap-card">
+              <h3>🚗 Traffic &amp; Parking</h3>
+              <p>Check real-time parking availability and traffic congestion.</p>
+              <button class="btn-ghost small" onclick="sendAIMessage('Is parking near Gate 2 crowded?')">Try it →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ SETTINGS PAGE ════════════ -->
+      <section class="page" id="page-settings">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">⚙️ Settings</h2>
+            <p class="page-sub">Manage your preferences and account</p>
+          </div>
+        </div>
+        <div class="settings-layout">
+          <div class="settings-card">
+            <h3>🎨 Appearance</h3>
+            <div class="setting-row">
+              <div>
+                <strong>Dark Mode</strong>
+                <p>Toggle between dark and light theme</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="themeToggleSettings" onchange="toggleTheme()"/>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3>🔔 Notifications</h3>
+            <div class="setting-row">
+              <div><strong>Safety Alerts</strong><p>Get notified of nearby safety incidents</p></div>
+              <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div><strong>Complaint Updates</strong><p>Updates on your submitted reports</p></div>
+              <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div><strong>Campus Community</strong><p>New posts and alerts from community</p></div>
+              <label class="toggle-switch"><input type="checkbox"/><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3>🔒 Privacy</h3>
+            <div class="setting-row">
+              <div><strong>Anonymous Reporting</strong><p>Submit reports without showing your identity</p></div>
+              <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div><strong>Location Sharing</strong><p>Share location for more accurate incident reports</p></div>
+              <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;gap:0.5rem;flex-wrap:wrap">
+              <h3>👤 Demo Account</h3>
+              <span class="demo-badge">Hackathon Prototype</span>
+            </div>
+            <div class="setting-row">
+              <div><strong>Full Name</strong><p id="settingsUserName">Aryan Kashyap</p></div>
+              <button class="btn-ghost small" onclick="openUserSwitchModal()">Switch</button>
+            </div>
+            <div class="setting-row">
+              <div><strong>Course</strong><p id="settingsUserCourse">B.Tech CSE (AI)</p></div>
+            </div>
+            <div class="setting-row">
+              <div><strong>Year &amp; Section</strong><p id="settingsUserYearSec">1st Year • Section 36</p></div>
+            </div>
+            <div class="setting-row">
+              <div><strong>Campus ID</strong><p id="settingsUserId">DEMO-STU-1001</p></div>
+            </div>
+            <div class="setting-row">
+              <div><strong>Role</strong><p id="settingsRole">Student</p></div>
+            </div>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.25rem">
+              <button class="btn-primary small" onclick="openUserSwitchModal()">👥 Switch Demo User</button>
+              <button class="btn-ghost small" style="color:var(--red);border-color:var(--red-border)" onclick="resetDemoData()">🗑️ Reset Demo Data</button>
+              <button class="btn-ghost small" onclick="handleLogout()">← Sign Out</button>
+            </div>
+          </div>
+          <div class="settings-card future-card">
+            <div class="future-badge small">🔵 FUTURE SCOPE</div>
+            <h3>📱 Native Mobile App Features</h3>
+            <ul class="future-list">
+              <li>🆘 Hardware-triggered SOS (power button)</li>
+              <li>📍 Background location sharing</li>
+              <li>🔔 Push notifications</li>
+              <li>📸 Permission-based emergency media capture</li>
+              <li>🤖 AI-assisted distress detection</li>
+              <li>🔗 Deep security-system integration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MODALS & OVERLAYS
+═══════════════════════════════════════════════════ -->
+
+<!-- Incident Detail Modal -->
+<div class="modal-overlay" id="incidentModal" onclick="closeModal('incidentModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('incidentModal')">✕</button>
+    <div id="incidentModalContent"></div>
+  </div>
+</div>
+
+<!-- Lost & Found Form Modal -->
+<div class="modal-overlay" id="lfModal" onclick="closeModal('lfModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('lfModal')">✕</button>
+    <div id="lfModalContent"></div>
+  </div>
+</div>
+
+<!-- Match Modal -->
+<div class="modal-overlay" id="matchModal" onclick="closeModal('matchModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('matchModal')">✕</button>
+    <div class="match-modal-content">
+      <h2>🤖 AI Match Found</h2>
+      <p class="match-confidence">94% Confidence Match</p>
+      <div class="match-comparison">
+        <div class="mc-side lost">
+          <h4>Your Lost Item</h4>
+          <div class="mc-icon">🪪</div>
+          <strong>University ID Card</strong>
+          <p>Lost near Library · 4h ago</p>
+          <p>Green lanyard, GU logo</p>
+        </div>
+        <div class="mc-vs">vs</div>
+        <div class="mc-side found">
+          <h4>Found Item</h4>
+          <div class="mc-icon">🪪</div>
+          <strong>ID Card — Library Entrance</strong>
+          <p>Found near main library door</p>
+          <p>Green lanyard, university card</p>
+        </div>
+      </div>
+      <p class="match-privacy">🔒 Contact details shared only through secure campus channel. Your personal number is never exposed.</p>
+      <div class="match-modal-actions">
+        <button class="btn-primary" onclick="closeModal('matchModal');showToast('✅ Secure contact request sent!','Campus Security will coordinate the return.')">Request Contact</button>
+        <button class="btn-ghost" onclick="closeModal('matchModal')">Not My Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Women's Safety Modal -->
+<div class="modal-overlay" id="womensSafetyModal" onclick="closeModal('womensSafetyModal')">
+  <div class="modal-box wide" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('womensSafetyModal')">✕</button>
+    <div class="womens-safety-modal">
+      <h2>🟣 Women's Safety &amp; Grievance Center</h2>
+      <p class="ws-headline">"Safety starts before an emergency."</p>
+      <!-- Flow -->
+      <div class="ws-flow">
+        <div class="wsf-step prevent"><strong>PREVENT</strong><p>Identify recurring issues</p></div>
+        <div class="wsf-arrow">→</div>
+        <div class="wsf-step report"><strong>REPORT</strong><p>Private &amp; fast reporting</p></div>
+        <div class="wsf-arrow">→</div>
+        <div class="wsf-step respond"><strong>RESPOND</strong><p>Route to authorities</p></div>
+        <div class="wsf-arrow">→</div>
+        <div class="wsf-step verify"><strong>VERIFY</strong><p>Community confirmation</p></div>
+        <div class="wsf-arrow">→</div>
+        <div class="wsf-step improve"><strong>IMPROVE</strong><p>Infrastructure upgrades</p></div>
+      </div>
+      <!-- Issue Cards -->
+      <div class="ws-cards">
+        <div class="ws-card lighting">
+          <span class="ws-card-icon">💡</span>
+          <strong>Poorly Lit Area</strong>
+          <p>"Streetlight near hostel pathway is not working."</p>
+          <span class="ws-reports">3 reports · High Priority</span>
+          <button class="btn-ghost small">View &amp; Verify</button>
+        </div>
+        <div class="ws-card unsafe">
+          <span class="ws-card-icon">⚠️</span>
+          <strong>Unsafe Area</strong>
+          <p>"Low visibility near parking exit at night."</p>
+          <span class="ws-reports">2 reports · Medium</span>
+          <button class="btn-ghost small">View &amp; Verify</button>
+        </div>
+        <div class="ws-card sanitary">
+          <span class="ws-card-icon">🧻</span>
+          <strong>Sanitary Facility</strong>
+          <p>"Sanitary-pad dispenser requires refill — Block B."</p>
+          <span class="ws-reports">1 report · High Priority</span>
+          <button class="btn-ghost small">View &amp; Verify</button>
+        </div>
+        <div class="ws-card concern">
+          <span class="ws-card-icon">🔴</span>
+          <strong>Safety Concern</strong>
+          <p>"Repeated reports from Girls' Hostel road — needs audit."</p>
+          <span class="ws-reports">5 reports · High Priority</span>
+          <button class="btn-ghost small">View &amp; Verify</button>
+        </div>
+      </div>
+      <p class="privacy-note large">🔒 Sensitive grievances are visible only to authorized personnel. Your identity is protected.</p>
+      <button class="btn-primary" onclick="closeModal('womensSafetyModal');navigateTo('reportIssue');selectCategory('Women Safety','👩')">Report Privately →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Traffic Report Modal -->
+<div class="modal-overlay" id="trafficModal" onclick="closeModal('trafficModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('trafficModal')">✕</button>
+    <h2>🚦 Report Traffic Issue</h2>
+    <div class="form-group" style="margin-top:1rem">
+      <label>Issue Type</label>
+      <select id="trafficType" class="form-select">
+        <option>Wrong Parking</option>
+        <option>Blocked Route</option>
+        <option>Reckless Driving</option>
+        <option>Traffic Congestion</option>
+        <option>Unauthorized Parking</option>
+        <option>Accident</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Location</label>
+      <select class="form-select">
+        <option>Gate 1</option><option>Gate 2</option><option>Academic Block</option>
+        <option>Main Road</option><option>Sports Complex</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-textarea" rows="3" placeholder="Describe the issue..."></textarea>
+    </div>
+    <div style="display:flex;gap:.75rem;margin-top:1rem">
+      <button class="btn-ghost" onclick="closeModal('trafficModal')">Cancel</button>
+      <button class="btn-primary" onclick="closeModal('trafficModal');showToast('✅ Traffic report submitted!','Campus security has been notified.')">Submit Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Panel -->
+<div class="modal-overlay" id="notificationsPanel" onclick="closeModal('notificationsPanel')">
+  <div class="notifications-panel" onclick="event.stopPropagation()">
+    <div class="np-header">
+      <h3>🔔 Notifications</h3>
+      <button onclick="closeModal('notificationsPanel')">✕</button>
+    </div>
+    <div class="np-list">
+      <div class="np-item unread">
+        <div class="np-icon red">🛡️</div>
+        <div class="np-content">
+          <strong>High Priority Alert</strong>
+          <p>Aggressive dog reported near Canteen. Security dispatched.</p>
+          <span>18 minutes ago</span>
+        </div>
+      </div>
+      <div class="np-item unread">
+        <div class="np-icon orange">💡</div>
+        <div class="np-content">
+          <strong>Your Report Updated</strong>
+          <p>Broken Streetlight report (CP-2026-047) assigned to Maintenance team.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="np-item unread">
+        <div class="np-icon blue">🔎</div>
+        <div class="np-content">
+          <strong>Lost & Found Match</strong>
+          <p>Campus AI found a 94% match for your lost University ID Card!</p>
+          <span>4 hours ago</span>
+        </div>
+      </div>
+      <div class="np-item">
+        <div class="np-icon green">✅</div>
+        <div class="np-content">
+          <strong>Issue Resolved</strong>
+          <p>Blocked pathway near Academic Block has been cleared.</p>
+          <span>Yesterday</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Switch Demo User Modal -->
+<div class="modal-overlay" id="userSwitchModal" onclick="closeModal('userSwitchModal')">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('userSwitchModal')">✕</button>
+    <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.25rem">
+      <span style="font-size:1.6rem">👥</span>
+      <div>
+        <h2 style="font-size:1.35rem">Switch Demo User</h2>
+        <span class="demo-badge" style="font-size:0.65rem">Shared Campus Database</span>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:0.5rem 0 1.25rem">
+      Select an existing presenter or create a new student / security profile.
+    </p>
+
+    <div style="margin-bottom:1.25rem">
+      <label style="font-size:0.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:0.6rem">Available Demo Profiles</label>
+      <div id="demoUsersList" style="display:flex;flex-direction:column;gap:0.5rem;max-height:220px;overflow-y:auto;padding-right:4px">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--border-subtle);padding-top:1rem;margin-top:1rem">
+      <label style="font-size:0.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:0.6rem">+ Enter New Demo Profile</label>
+      <div class="form-group" style="margin-bottom:0.65rem">
+        <input type="text" id="newDemoName" placeholder="Full Name (e.g. Radhika)" class="form-input" />
+      </div>
+      <div class="form-group" style="margin-bottom:0.65rem">
+        <input type="text" id="newDemoCourse" placeholder="Course (e.g. B.Tech CSE (AI))" class="form-input" />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.65rem">
+        <input type="text" id="newDemoYear" placeholder="Year (e.g. 1st Year)" class="form-input" />
+        <input type="text" id="newDemoSection" placeholder="Section (e.g. Section 36)" class="form-input" />
+      </div>
+      <div class="form-group" style="margin-bottom:1rem">
+        <div class="role-selector" id="newDemoRoleSelector">
+          <button class="role-btn active" data-role="student" type="button" onclick="selectNewDemoRole('student', this)">👨‍🎓 Student</button>
+          <button class="role-btn" data-role="faculty" type="button" onclick="selectNewDemoRole('faculty', this)">👨‍🏫 Faculty</button>
+          <button class="role-btn" data-role="security" type="button" onclick="selectNewDemoRole('security', this)">👮 Security</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end">
+        <button class="btn-ghost small" onclick="closeModal('userSwitchModal')">Cancel</button>
+        <button class="btn-primary small" onclick="createNewDemoUser()">Create &amp; Switch →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Campus AI Button -->
+<button class="floating-ai-btn" onclick="navigateTo('campusAI')" id="floatingAIBtn">
+  🤖
+  <span class="fab-label">Campus AI</span>
+</button>
+
+<!-- Toast Notification -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
